@@ -1,3 +1,6 @@
+#ifndef UTILS
+#define UTILS
+
 #include <iterator> // istream_iterator
 #include <cstring> // strchr
 #include <fstream>
@@ -36,15 +39,15 @@ string getContentType(const string &filePath) {
  * @return размер файла
  */
 size_t getContentLength(const string &filePath) {
-        std::ifstream file(filePath, std::ios::in);
+    std::ifstream file(filePath, std::ios::in);
 
-        std::streampos fsize = file.tellg(); // Указатель на начало файла
-        file.seekg(0, std::ios::end);        // Перемещаем указатель на конец файла
+    std::streampos fsize = file.tellg(); // Указатель на начало файла
+    file.seekg(0, std::ios::end);        // Перемещаем указатель на конец файла
 
-        fsize = file.tellg() - fsize; // Разность указателей
-        file.close();
+    fsize = file.tellg() - fsize; // Разность указателей
+    file.close();
 
-        return (size_t) fsize;
+    return (size_t) fsize;
 }
 
 /**
@@ -53,13 +56,23 @@ size_t getContentLength(const string &filePath) {
  * @return содержимое файла
  */
 string getContent(const string &filePath) {
-    string fileContent;
     std::ifstream file(filePath);
 
-    std::istream_iterator<char> start(file), end;
-        fileContent.insert(fileContent.begin(), start, end);
+    std::istreambuf_iterator<char> start(file), end;
 
-    return fileContent;
+    return string(start, end);
+}
+
+/**
+ * Функция проверяет существуте ли файл
+ * @param filePath - путь до файла
+ * @return true/false - существует ли файл
+ */
+bool isFileExist(const string &filePath) {
+    std::ifstream file(filePath);
+    return !file.fail();
 }
 
 };
+
+#endif //UTILS
