@@ -3,4 +3,4 @@ project(HTTPServer)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(HTTPServer main.cpp)
+add_executable(HTTPServer src/main.cpp)

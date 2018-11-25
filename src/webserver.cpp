@@ -47,11 +47,12 @@ int getRequest(int _sockfd) {
     string filePath = Utils::getFilePath((char *) &request);
     cout << "GET: " << filePath << endl;
 
+    filePath = string("../public/") + filePath;
+
     if (!Utils::isFileExist(filePath)) {
-        filePath = "./public/404.html";
+        filePath = "../public/404.html";
         response += "HTTP/1.1 404 Not Found\n";
     }else {
-        filePath = string("./public/") + filePath;
         response += "HTTP/1.1 200 OK\n";
     }
     response += "Accept-Ranges: bytes"; // TODO: Зачем нужно это
